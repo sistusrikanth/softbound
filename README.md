@@ -1,72 +1,71 @@
 # Softbound
 
-Lightweight **sketch art** image generator (250×250 px) that runs **locally on your Mac**. Uses a small diffusion model and a pencil-sketch post-process; no external APIs.
-
-## Example prompt
-
-```bash
-python generate.py "Rooster on a rustic meadow"
-```
-
-Output is saved as `output/Rooster on a rustic meadow.png` (250×250, pencil-sketch style).
+Agent pipeline for children’s story worlds: **intent → audience → world → story**, with optional LLM backends (Gemini, OpenRouter, or local).
 
 ## Setup
 
-```bash
-cd softbound
-python -m venv .venv
-source .venv/bin/activate   # on Mac/Linux
-pip install -r requirements.txt
-```
-
-First run will download the model (~200MB) from Hugging Face.
-
-## Usage
+From this directory (`softbound/`):
 
 ```bash
-# Default prompt: "Rooster on a rustic meadow"
-python generate.py
-
-# Better quality (Stable Diffusion 1.5, ~4GB download, slower)
-python generate.py "Rooster on a rustic meadow" -m sd15
-
-# Custom prompt
-python generate.py "A cat sleeping on a windowsill"
-
-# Save to a specific file
-python generate.py "Mountain at sunset" -o my_image.png
-
-# Higher quality (more steps, ~30–45s)
-python generate.py "Ship in a bottle" -s 50
-
-# Faster draft (fewer steps)
-python generate.py "Ship in a bottle" -s 20
-
-# Reproducible result
-python generate.py "Abstract shapes" --seed 42
+python3 -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -r softbound-agent/requirements.txt
 ```
 
-## Options
+Copy `softbound-agent/env.example` to `softbound-agent/.env` and set **`GEMINI_API_KEY`** (or export it). See [Google AI Studio](https://aistudio.google.com/apikey).
 
-| Option | Description |
-|--------|-------------|
-| `prompt` | Text description of the image |
-| `-m`, `--model` | `tiny` (fast, ~200MB) or `sd15` (better quality, ~4GB). Default: tiny |
-| `-o`, `--output` | Output file path |
-| `-s`, `--steps` | Inference steps (default: 40, higher = better quality) |
-| `-g`, `--guidance` | Guidance scale (default: 7.5) |
-| `--seed` | Random seed for reproducibility |
+## Run the orchestrator
 
-## Requirements
+Use **`PYTHONPATH=softbound-agent`** so the `core` and `agents` packages resolve. Run from **`softbound/`** (repo root for this project):
 
-- Python 3.10+
-- Mac (uses Apple Silicon GPU via MPS when available, else CPU)
-- ~2GB disk for model cache
+### Gemini (recommended)
 
-## How it works
+```bash
+cd /path/to/softbound
 
-- **Models:** `tiny` = [Segmind Tiny-SD](https://huggingface.co/segmind/tiny-sd) (fast, small). `sd15` = [Stable Diffusion 1.5](https://huggingface.co/runwayml/stable-diffusion-v1-5) (better quality, larger).
-- Prompts are augmented with sketch-style keywords; output is then passed through a **pencil-sketch** filter (grayscale, hand-drawn look).
-- Generates at **512×512** for better detail, then downscales to 250×250 and applies the sketch effect.
-- Uses a negative prompt to reduce blur and photorealism; 40 steps and guidance scale 7.5 by default.
-- Runs fully offline after the first model download.
+SOFTBOUND_LLM_BACKEND=gemini PYTHONPATH=softbound-agent \
+  python3 softbound-agent/orchestrator.py --store session_2.json
+```
+
+Runs the full pipeline (intent, audience, world, story), then saves **intent, audience, and world** to `session_2.json` before the story step completes. Omit the path to use the default file next to the orchestrator (see `--store` below).
+
+Load a saved session and **skip LLM calls for layers 1–3** (only the story step runs):
+
+```bash
+SOFTBOUND_LLM_BACKEND=gemini PYTHONPATH=softbound-agent \
+  python3 softbound-agent/orchestrator.py --load session_2.json
+```
+
+### CLI options
+
+| Flag | Description |
+|------|-------------|
+| `--load PATH` | Load intent, audience, and world from JSON; no LLM for those layers. |
+| `--store [PATH]` | After world is ready, save intent, audience, world to JSON. If you pass `--store` with no path, it uses **`softbound-agent/.softbound_session.json`**. |
+
+### Environment (LLM)
+
+| Variable | Purpose |
+|----------|---------|
+| `GEMINI_API_KEY` | Google AI Gemini API key (also `GOOGLE_API_KEY` is accepted). |
+| `SOFTBOUND_LLM_BACKEND` | `gemini`, `openrouter`, or `local` to force a backend. |
+| `GEMINI_MODEL` | Optional. Default: `gemini-2.0-flash-lite`. |
+| `OPENROUTER_API_KEY` | If using OpenRouter instead of Gemini. |
+
+If `SOFTBOUND_LLM_BACKEND` is unset, the client picks Gemini when a Gemini key is set, then OpenRouter, then local.
+
+## Layout
+
+```
+softbound/
+├── README.md                 # This file
+└── softbound-agent/
+    ├── orchestrator.py       # Entry: CreativeOrchestrator
+    ├── env.example           # Copy to .env for GEMINI_API_KEY
+    ├── core/                 # models, llm_client, session_store
+    └── agents/               # Intent, Audience, World, Story agents
+```
+
+## License
+
+See the repository root for license information.
