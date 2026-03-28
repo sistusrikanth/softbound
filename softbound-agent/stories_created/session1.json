@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "intent": {
+    "artist_style": "Cozy, hand-painted watercolor textures.",
+    "product_philosophy": "Foster deep nature appreciation.",
+    "emotional_promise": "Leaves children feeling secure.",
+    "creative_boundaries": "No modern technology allowed."
+  },
+  "audience": {
+    "child_profile": {
+      "age_range": "7",
+      "emotional_needs": "[validation, autonomy, reassurance]",
+      "attention_span": "medium",
+      "interests": [
+        "[astronomy",
+        "origami",
+        "fossil hunting]"
+      ],
+      "sensitivities": [
+        "[loud noises",
+        "scratchy fabrics",
+        "sudden changes]"
+      ]
+    },
+    "parent_age": "42",
+    "parent_job": "[architect, freelance writer, museum curator]",
+    "cultural_context": "",
+    "coplay_context": "",
+    "reading_setting": ""
+  },
+  "world": {
+    "rules": "All creatures communicate through gentle gestures, soft hums, or rhythmic movements rather than loud speech.\nEvery living thing in the world is treated with patience, allowing for long pauses and stillness.\nNo object is ever broken or discarded; everything is repurposed, folded, or returned to the earth.",
+    "physics": "Time moves at the pace of a drifting cloud, and the sun and moon transition with a slow, velvet fade. Gravity is light and forgiving, allowing objects to settle softly into place without a sound.",
+    "moral_logic": "- The world feels like a quiet, sun-drenched meadow at twilight, offering a sense of profound security and belonging.",
+    "visual_style": "It is rendered in soft, hand-painted watercolor textures with a palette of muted moss greens, dusty indigos, and warm, golden ochres. The environment is filled with gentle light that seems to glow from within the paper, creating a calm, tactile space where nature is always close and never hurried.",
+    "characters": [
+      {
+        "name": "Pip",
+        "role": "The Observer",
+        "description": "A small, gentle fox with a soft fur coat who enjoys sitting quietly to watch the stars and clouds."
+      },
+      {
+        "name": "Elder Moss",
+        "role": "The Keeper",
+        "description": "A slow-moving, ancient tortoise with a shell that resembles a miniature garden, known for his deep, rumbling hums."
+      },
+      {
+        "name": "Elara",
+        "role": "The Folder",
+        "description": "A curious bird with paper-like wings who enjoys folding fallen leaves into intricate, delicate shapes."
+      }
+    ],
+    "extra": {},
+    "full_output": "Step 1: Characters\n- Pip (The Observer): A small, gentle fox with a soft fur coat who enjoys sitting quietly to watch the stars and clouds.\n- Elder Moss (The Keeper): A slow-moving, ancient tortoise with a shell that resembles a miniature garden, known for his deep, rumbling hums.\n- Elara (The Folder): A curious bird with paper-like wings who enjoys folding fallen leaves into intricate, delicate shapes.\n\nStep 2: World rules\n- All creatures communicate through gentle gestures, soft hums, or rhythmic movements rather than loud speech.\n- Every living thing in the world is treated with patience, allowing for long pauses and stillness.\n- No object is ever broken or discarded; everything is repurposed, folded, or returned to the earth.\n\nStep 3: Physics\n- Time moves at the pace of a drifting cloud, and the sun and moon transition with a slow, velvet fade. Gravity is light and forgiving, allowing objects to settle softly into place without a sound.\n\nStep 4: Tone and visual style\n- The world feels like a quiet, sun-drenched meadow at twilight, offering a sense of profound security and belonging. It is rendered in soft, hand-painted watercolor textures with a palette of muted moss greens, dusty indigos, and warm, golden ochres. The environment is filled with gentle light that seems to glow from within the paper, creating a calm, tactile space where nature is always close and never hurried."
+  }
+}

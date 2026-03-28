@@ -1,0 +1,10 @@
+.venv/
+output/
+__pycache__/
+*.pyc
+.DS_Store
+.env
+**/.env
+.softbound_session.json
+**/my_session.json
+session_*.json
