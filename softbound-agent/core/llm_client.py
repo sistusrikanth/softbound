@@ -40,7 +40,7 @@ OPENROUTER_BASE = "https://openrouter.ai/api/v1"
 DEFAULT_OPENROUTER_MODEL = "meta-llama/llama-3.2-3b-instruct:free"
 
 GEMINI_BASE = "https://generativelanguage.googleapis.com/v1beta"
-DEFAULT_GEMINI_MODEL = "gemini-3.1-flash-lite-preview" # Works [gemini-2.5-flash, gemini-3.1-flash-lite-preview, gemma3-1b-it]
+DEFAULT_GEMINI_MODEL = "gemini-3-flash-preview" # Works [gemini-3-flash-preview, gemini-2.5-flash, gemini-3.1-flash-lite-preview, gemma3-1b-it]
 
 
 def _backend() -> str:

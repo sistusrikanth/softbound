@@ -14,8 +14,11 @@ from pydantic import BaseModel, computed_field, Field
 
 class Intent(BaseModel):
     """
-    Layer 1: Creative intent as free-form text.
-    Four flat fields for lightweight LLM output; summary is computed for downstream.
+    Layer 1: Show-bible style creative intent (four blocks, free text).
+    product_philosophy — Why: mission archetype, parent necessity/guilt, Maisy Test ethics.
+    artist_style — Mood & aesthetic: stimulation profile, visual style, audio/participatory cues.
+    emotional_promise — How: structural archetype, narrative engine, failure cycle / mastery.
+    creative_boundaries — Safety: non-goals, home/cuddle return, curriculum matrix (table ok).
     """
     artist_style: str = ""
     product_philosophy: str = ""
@@ -39,13 +42,33 @@ class Intent(BaseModel):
 
 # --- Audience schema (Pydantic) ---
 
+
+class ProfileDimension(BaseModel):
+    """One inferred developmental dimension: short label + one supporting sentence."""
+    label: str = ""
+    explanation: str = ""
+
+
 class ChildProfile(BaseModel):
-    """Child audience profile: age, needs, attention, interests, sensitivities."""
+    """
+    Child audience profile (0–7): legacy flat hints plus inferred developmental dimensions.
+    Dimensions guide story structure, language, pacing, emotion, and interaction.
+    """
     age_range: str = ""
     emotional_needs: str = ""
     attention_span: str = ""
     interests: list[str] = Field(default_factory=list)
     sensitivities: list[str] = Field(default_factory=list)
+    narrative_cognition: ProfileDimension = Field(default_factory=ProfileDimension)
+    language_capacity: ProfileDimension = Field(default_factory=ProfileDimension)
+    attention_profile: ProfileDimension = Field(default_factory=ProfileDimension)
+    emotional_processing: ProfileDimension = Field(default_factory=ProfileDimension)
+    interaction_style: ProfileDimension = Field(default_factory=ProfileDimension)
+    imagination_mode: ProfileDimension = Field(default_factory=ProfileDimension)
+    familiarity_anchors: ProfileDimension = Field(default_factory=ProfileDimension)
+    engagement_drivers: ProfileDimension = Field(default_factory=ProfileDimension)
+    profile_confidence: str = ""
+    key_assumptions: str = ""
 
 
 class AudienceExperience(BaseModel):

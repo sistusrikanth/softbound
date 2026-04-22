@@ -5,43 +5,73 @@ import re
 from typing import Any
 
 from core.base_agent import BaseAgentMixin
-from core.models import Intent, AudienceExperience, World, Story
+from core.models import Intent, AudienceExperience, ProfileDimension, World, Story
 from .prompts_common import GLOBAL_DIRECTIVE
 
 
 def _intent_summary(intent: Intent) -> str:
     """Summary of intent for use in prompts (from IntentAgent output)."""
     parts = []
-    if intent.artist_style:
-        parts.append("Artist style: " + intent.artist_style)
     if intent.product_philosophy:
-        parts.append("Product philosophy: " + intent.product_philosophy)
+        parts.append("Why / philosophy: " + intent.product_philosophy)
+    if intent.artist_style:
+        parts.append("Mood & aesthetic: " + intent.artist_style)
     if intent.emotional_promise:
-        parts.append("Emotional promise: " + intent.emotional_promise)
+        parts.append("Themes & narrative engine: " + intent.emotional_promise)
     if intent.creative_boundaries:
-        parts.append("Creative boundaries: " + intent.creative_boundaries)
-    return ". ".join(parts) if parts else ""
+        parts.append("Safety & curriculum: " + intent.creative_boundaries)
+    return "\n\n".join(parts) if parts else ""
+
+
+def _dim_short(d: ProfileDimension) -> str:
+    if not d.label and not d.explanation:
+        return ""
+    return f"{d.label} — {d.explanation}" if d.label and d.explanation else (d.label or d.explanation)
 
 
 def _audience_summary(audience: AudienceExperience) -> str:
     """Summary of audience for use in prompts (from AudienceAgent output)."""
-    parts = []
     cp = audience.child_profile
-    if cp:
-        if cp.age_range:
-            parts.append("Child age: " + cp.age_range)
+    parts: list[str] = []
+    if not cp:
+        return ""
+    if cp.age_range:
+        parts.append("age≈" + cp.age_range)
+    dims = (
+        ("NC", cp.narrative_cognition),
+        ("Lang", cp.language_capacity),
+        ("Attn", cp.attention_profile),
+        ("Emo", cp.emotional_processing),
+        ("Interact", cp.interaction_style),
+        ("Imag", cp.imagination_mode),
+        ("Familiar", cp.familiarity_anchors),
+        ("Engage", cp.engagement_drivers),
+    )
+    dim_strs = [f"{abbr}: {s}" for abbr, dim in dims if (s := _dim_short(dim))]
+    if dim_strs:
+        parts.append("; ".join(dim_strs))
+        if cp.profile_confidence:
+            parts.append("conf=" + cp.profile_confidence)
+        if cp.key_assumptions:
+            parts.append("assume: " + cp.key_assumptions)
+    else:
         if cp.emotional_needs:
-            parts.append("Emotional needs: " + cp.emotional_needs)
+            parts.append(cp.emotional_needs)
         if cp.attention_span:
-            parts.append("Attention span: " + cp.attention_span)
+            parts.append("attention: " + cp.attention_span)
         if cp.interests:
-            parts.append("Interests: " + ", ".join(cp.interests))
+            parts.append("interests: " + ", ".join(cp.interests))
         if cp.sensitivities:
-            parts.append("Sensitivities: " + ", ".join(cp.sensitivities))
+            parts.append("sensitivities: " + ", ".join(cp.sensitivities))
+    if dim_strs and (cp.interests or cp.sensitivities):
+        if cp.interests:
+            parts.append("also interests: " + ", ".join(cp.interests))
+        if cp.sensitivities:
+            parts.append("also sensitivities: " + ", ".join(cp.sensitivities))
     if audience.parent_age:
-        parts.append("Parent age: " + audience.parent_age)
+        parts.append("parent " + audience.parent_age)
     if audience.parent_job:
-        parts.append("Parent job: " + audience.parent_job)
+        parts.append(audience.parent_job)
     return ". ".join(parts) if parts else ""
 
 
