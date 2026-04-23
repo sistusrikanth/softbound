@@ -76,6 +76,19 @@ class CreativeOrchestrator:
 
         print("---------------- Layer 4: Story Agent ---")
         print(f"Theme (short label): {story.theme}")
+        print(f"Structural archetype: {getattr(story, 'structural_archetype', '')!r}")
+        if story.extra.get("maisy_test"):
+            print(f"Maisy (heuristic): overall_pass={story.extra['maisy_test'].get('overall_pass')} method={story.extra['maisy_test'].get('method')}")
+        print(f"Participatory pause markers: {len(getattr(story, 'participatory_cue_markers', []) or [])} line(s)")
+        hints = getattr(story, "page_animation_hints", None) or []
+        print(f"Page animation hints: {len(hints)} (from per-page `Animation:` lines)")
+        for h in hints[:12]:
+            print(
+                f"  Page {h.page_index}: {h.subject!r} | {h.trigger!r} → {h.effect[:80]!r}"
+                + ("…" if len(h.effect) > 80 else "")
+            )
+        if len(hints) > 12:
+            print(f"  … and {len(hints) - 12} more")
         print(f"Story full_output ({len(story.full_output)} chars):")
         print(story.full_output)
 
@@ -105,7 +118,10 @@ def main() -> None:
         ),
     )
     args = parser.parse_args()
-    CreativeOrchestrator().run(load_path=args.load, store_path=args.store)
+    CreativeOrchestrator().run(
+        load_path=args.load,
+        store_path=args.store,
+    )
 
 
 if __name__ == "__main__":

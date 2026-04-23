@@ -28,8 +28,12 @@ def session_from_dict(data: dict[str, Any]) -> tuple[Intent, AudienceExperience,
     audience = AudienceExperience.model_validate(data["audience"])
     w = data["world"]
     world = World(
+        sensory_environment=w.get("sensory_environment") or "",
+        safe_harbor=w.get("safe_harbor") or "",
         rules=w.get("rules") or "",
         physics=w.get("physics") or "",
+        interaction_physics=w.get("interaction_physics") or "",
+        visual_pacing=w.get("visual_pacing") or "",
         moral_logic=w.get("moral_logic") or "",
         visual_style=w.get("visual_style") or "",
         characters=list(w.get("characters") or []),
