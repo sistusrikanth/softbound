@@ -1,8 +1,10 @@
 # Softbound Backend
 
-FastAPI server that accepts world-building input from a frontend and runs a **WorldAgent** (standalone or agentic LLM loop).
+FastAPI server that accepts world-building input from a frontend and runs LLM agents for world-building and the **Softbound Studio** co-author flow.
 
-**Frontend team:** see [FRONTEND_INTEGRATION.md](./FRONTEND_INTEGRATION.md) for API contracts, TypeScript types, UI wiring, and example `fetch` calls.
+**Frontend:** the World Bible Studio React app lives in [`studio/`](./studio/). See [studio/README.md](./studio/README.md) for running the full stack.
+
+**API contracts:** see [FRONTEND_INTEGRATION.md](./FRONTEND_INTEGRATION.md) for endpoint details, TypeScript types, and example `fetch` calls.
 
 ## Run locally
 

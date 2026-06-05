@@ -525,3 +525,23 @@ For Next.js use `NEXT_PUBLIC_API_BASE_URL` instead. Update the production value 
 - **Images** — character images are frontend-only. The backend never receives or returns image URLs.
 - **Mock mode** — when running locally without `GEMINI_API_KEY`, the backend returns deterministic mock responses. Useful for UI development without LLM costs.
 - **Interactive API docs** — with the server running, open `http://localhost:3000/docs` for Swagger UI to try endpoints in the browser.
+
+---
+
+## Softbound Studio endpoints
+
+Used by `softbound-studio/` (World Bible Studio). All return JSON shaped for the studio UI.
+
+| Endpoint | Purpose |
+|----------|---------|
+| `POST /api/studio/bible/generate` | `{ seed, preset_id? }` → `{ bible: { title, logline, paras[] } }` |
+| `POST /api/studio/bible/revise` | `{ bible, note: { text, quote?, para_id } }` → revised bible + `summary` |
+| `POST /api/studio/bible/reweave` | `{ bible, characters[] }` → bible rewritten for cast |
+| `POST /api/studio/cast/seed` | `{ seed, preset_id?, count? }` → `{ characters[] }` with role, bio, themes, tint |
+| `POST /api/studio/characters/refine` | `{ character, ask }` → `{ character }` |
+| `POST /api/studio/characters/flesh` | `{ character, seed }` → `{ character }` |
+| `POST /api/studio/style/generate` | `{ bible, direction, extra? }` → `{ style }` prompt library |
+| `POST /api/studio/stories/propose` | `{ bible, existing[], count? }` → `{ stories[] }` |
+| `POST /api/studio/stories/revise` | `{ story, ask }` → `{ story }` |
+
+The studio dev server proxies `/api` and `/health` to `http://localhost:3000` — leave `VITE_API_BASE_URL` empty locally.

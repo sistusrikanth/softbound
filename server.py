@@ -11,6 +11,7 @@ from agents.world_agent import WorldAgent
 from agents.world_characters_agent import WorldCharactersAgent
 from agents.world_description_agent import WorldDescriptionAgent
 from agents.world_style_agent import WorldStyleAgent
+from agents.studio_agent import StudioAgent
 from lib.llm.create_client import create_llm_client, resolve_provider
 
 port = int(os.getenv("PORT", "3000"))
@@ -32,6 +33,7 @@ try:
     world_description_agent = WorldDescriptionAgent(llm=llm)
     world_characters_agent = WorldCharactersAgent(llm=llm)
     world_style_agent = WorldStyleAgent(llm=llm)
+    studio_agent = StudioAgent(llm=llm)
 except ValueError as error:
     raise SystemExit(f"Failed to initialize agents: {error}") from error
 
@@ -67,6 +69,54 @@ class SuggestCharactersRequest(BaseModel):
 class GenerateStyleRequest(BaseModel):
     style_description: str
     text: str = ""
+
+
+class StudioBibleGenerateRequest(BaseModel):
+    seed: str
+    preset_id: Optional[str] = None
+
+
+class StudioBibleReviseRequest(BaseModel):
+    bible: Any
+    note: Any
+
+
+class StudioBibleReweaveRequest(BaseModel):
+    bible: Any
+    characters: List[Any]
+
+
+class StudioCastSeedRequest(BaseModel):
+    seed: str
+    preset_id: Optional[str] = None
+    count: int = 3
+
+
+class StudioCharacterRefineRequest(BaseModel):
+    character: Any
+    ask: str
+
+
+class StudioCharacterFleshRequest(BaseModel):
+    character: Any
+    seed: str
+
+
+class StudioStyleGenerateRequest(BaseModel):
+    bible: Any
+    direction: Any
+    extra: str = ""
+
+
+class StudioStoriesProposeRequest(BaseModel):
+    bible: Any
+    existing: List[Any] = []
+    count: int = 3
+
+
+class StudioStoryReviseRequest(BaseModel):
+    story: Any
+    ask: str
 
 
 @app.get("/health")
@@ -164,6 +214,87 @@ async def generate_style_prompt(body: GenerateStyleRequest):
         "message": "Style prompt generated",
         "style_prompt": result["style_prompt"],
     }
+
+
+@app.post("/api/studio/bible/generate")
+async def studio_bible_generate(body: StudioBibleGenerateRequest):
+    try:
+        bible = await studio_agent.generate_bible(body.seed, body.preset_id)
+    except Exception as error:
+        raise HTTPException(status_code=500, detail={"error": "Bible generation failed", "detail": str(error)}) from error
+    return {"message": "Bible generated", "bible": bible}
+
+
+@app.post("/api/studio/bible/revise")
+async def studio_bible_revise(body: StudioBibleReviseRequest):
+    try:
+        result = await studio_agent.revise_bible(body.bible, body.note)
+    except Exception as error:
+        raise HTTPException(status_code=500, detail={"error": "Bible revision failed", "detail": str(error)}) from error
+    return {"message": "Bible revised", **result}
+
+
+@app.post("/api/studio/bible/reweave")
+async def studio_bible_reweave(body: StudioBibleReweaveRequest):
+    try:
+        result = await studio_agent.reweave_bible(body.bible, body.characters)
+    except Exception as error:
+        raise HTTPException(status_code=500, detail={"error": "Bible reweave failed", "detail": str(error)}) from error
+    return {"message": "Bible rewoven", **result}
+
+
+@app.post("/api/studio/cast/seed")
+async def studio_cast_seed(body: StudioCastSeedRequest):
+    try:
+        characters = await studio_agent.seed_characters(body.seed, body.preset_id, body.count)
+    except Exception as error:
+        raise HTTPException(status_code=500, detail={"error": "Cast seed failed", "detail": str(error)}) from error
+    return {"message": "Cast seeded", "characters": characters}
+
+
+@app.post("/api/studio/characters/refine")
+async def studio_character_refine(body: StudioCharacterRefineRequest):
+    try:
+        character = await studio_agent.refine_character(body.character, body.ask)
+    except Exception as error:
+        raise HTTPException(status_code=500, detail={"error": "Character refine failed", "detail": str(error)}) from error
+    return {"message": "Character refined", "character": character}
+
+
+@app.post("/api/studio/characters/flesh")
+async def studio_character_flesh(body: StudioCharacterFleshRequest):
+    try:
+        character = await studio_agent.flesh_character(body.character, body.seed)
+    except Exception as error:
+        raise HTTPException(status_code=500, detail={"error": "Character flesh failed", "detail": str(error)}) from error
+    return {"message": "Character fleshed", "character": character}
+
+
+@app.post("/api/studio/style/generate")
+async def studio_style_generate(body: StudioStyleGenerateRequest):
+    try:
+        style = await studio_agent.generate_style_library(body.bible, body.direction, body.extra)
+    except Exception as error:
+        raise HTTPException(status_code=500, detail={"error": "Style generation failed", "detail": str(error)}) from error
+    return {"message": "Style library generated", "style": style}
+
+
+@app.post("/api/studio/stories/propose")
+async def studio_stories_propose(body: StudioStoriesProposeRequest):
+    try:
+        stories = await studio_agent.propose_stories(body.bible, body.existing, body.count)
+    except Exception as error:
+        raise HTTPException(status_code=500, detail={"error": "Story proposal failed", "detail": str(error)}) from error
+    return {"message": "Stories proposed", "stories": stories}
+
+
+@app.post("/api/studio/stories/revise")
+async def studio_story_revise(body: StudioStoryReviseRequest):
+    try:
+        story = await studio_agent.revise_story(body.story, body.ask)
+    except Exception as error:
+        raise HTTPException(status_code=500, detail={"error": "Story revision failed", "detail": str(error)}) from error
+    return {"message": "Story revised", "story": story}
 
 
 if __name__ == "__main__":

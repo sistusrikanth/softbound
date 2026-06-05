@@ -66,3 +66,24 @@ curl -s -X POST "${BASE_URL}/api/world" \
 echo -e "\n"
 
 echo "All requests completed."
+
+echo
+echo "==> Studio: generate bible"
+curl -s -X POST "${BASE_URL}/api/studio/bible/generate" \
+  -H "Content-Type: application/json" \
+  -d '{"seed": "a sleepy lighthouse on a foggy coast", "preset_id": "lighthouse"}'
+echo -e "\n"
+
+echo "==> Studio: seed cast"
+curl -s -X POST "${BASE_URL}/api/studio/cast/seed" \
+  -H "Content-Type: application/json" \
+  -d '{"seed": "rooster meadow", "preset_id": "meadow", "count": 3}'
+echo -e "\n"
+
+echo "==> Studio: propose stories"
+curl -s -X POST "${BASE_URL}/api/studio/stories/propose" \
+  -H "Content-Type: application/json" \
+  -d '{"bible": {"title": "Rooster meadow", "logline": "a quiet meadow", "paras": [{"heading": "the place", "text": "a warm meadow"}]}, "count": 2}'
+echo -e "\n"
+
+echo "Studio requests completed."
