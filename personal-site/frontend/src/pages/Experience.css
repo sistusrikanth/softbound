@@ -1,0 +1,186 @@
+.experience-page,
+.experience-detail-page {
+  max-width: 900px;
+}
+
+.experience-section {
+  margin-top: 48px;
+}
+
+.experience-section-title {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+}
+
+.experience-section-intro {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  max-width: 640px;
+}
+
+.timeline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.timeline-item {
+  padding: 22px 24px;
+}
+
+.timeline-meta {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.timeline-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.timeline-subtitle {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+.timeline-desc {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.experience-project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.experience-project-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.experience-project-card:hover {
+  border-color: var(--accent);
+}
+
+.experience-project-context {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+.experience-project-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.experience-project-summary {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  flex: 1;
+  margin-bottom: 16px;
+}
+
+.experience-project-link {
+  font-size: 0.75rem;
+  color: var(--accent);
+}
+
+.experience-back {
+  display: inline-block;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.experience-back:hover {
+  color: var(--text);
+}
+
+.experience-detail-context {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+}
+
+.experience-detail-summary {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  margin-bottom: 40px;
+  max-width: 680px;
+}
+
+.experience-components {
+  margin-bottom: 48px;
+}
+
+.component-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.component-card {
+  padding: 20px;
+}
+
+.component-name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.component-desc {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  margin-bottom: 12px;
+}
+
+.component-aspects {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.component-aspects li {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  padding-left: 12px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.component-aspects li::before {
+  content: "–";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+.experience-detail-body {
+  padding-top: 8px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+@media (max-width: 768px) {
+  .experience-project-grid,
+  .component-grid {
+    grid-template-columns: 1fr;
+  }
+}

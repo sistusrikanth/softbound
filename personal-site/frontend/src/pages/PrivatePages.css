@@ -1,0 +1,402 @@
+.private-muted {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+
+.week-tracker {
+  margin: 32px 0 28px;
+  padding: 24px;
+}
+
+.week-tracker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.week-tracker-title h2 {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+
+.week-tracker-range {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.week-nav-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  font-size: 0.9rem;
+}
+
+.week-nav-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.week-nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.week-strip {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.week-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 6px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  background: var(--bg);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.week-day:hover:not(:disabled) {
+  border-color: var(--border);
+}
+
+.week-day.selected {
+  border-color: var(--accent);
+  background: var(--bg-card);
+  box-shadow: 0 1px 3px rgba(42, 41, 38, 0.06);
+}
+
+.week-day.filled .week-day-num {
+  color: var(--text);
+}
+
+.week-day.future {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.week-day-name {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.week-day-num {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.week-day-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+  margin-top: 2px;
+}
+
+.week-day-dot.on {
+  background: var(--accent);
+}
+
+.week-progress {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+}
+
+.week-summary-block {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 20px;
+}
+
+.week-summary-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.week-summary-header h3 {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.week-summary-badge {
+  font-size: 0.7rem;
+  color: var(--green);
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--bg-elevated);
+}
+
+.week-summary-textarea {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  resize: vertical;
+  margin-bottom: 12px;
+}
+
+.week-summary-textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.week-summary-save {
+  font-size: 0.85rem;
+}
+
+.week-summary-pending {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 16px;
+}
+
+.day-date-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  margin: 32px 0 24px;
+}
+
+.day-date-row label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.day-date-row input[type="date"] {
+  display: block;
+  margin-top: 6px;
+  padding: 10px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+}
+
+.day-date-row input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.day-form {
+  padding: 28px;
+  margin-bottom: 48px;
+}
+
+.day-form label {
+  display: block;
+  margin-bottom: 24px;
+}
+
+.day-label {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.day-hint {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+.day-form textarea {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  resize: vertical;
+}
+
+.day-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.day-form-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.day-history-title {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+}
+
+.day-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.day-history-item {
+  text-align: left;
+  width: 100%;
+  padding: 16px 20px;
+  cursor: pointer;
+}
+
+.day-history-item.active {
+  border-color: var(--accent);
+}
+
+.day-history-date {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.day-history-preview p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.day-history-preview .mono {
+  color: var(--text-dim);
+  margin-right: 8px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.private-footer-link {
+  margin-top: 48px;
+}
+
+.private-footer-link a {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.private-footer-link a:hover {
+  color: var(--accent);
+}
+
+.identity-section {
+  margin-bottom: 48px;
+}
+
+.identity-section-title {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+}
+
+.identity-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.identity-card {
+  padding: 24px;
+}
+
+.identity-card-header {
+  margin-bottom: 12px;
+}
+
+.identity-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 4px;
+}
+
+.identity-hint {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.identity-card textarea {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  resize: vertical;
+  margin-bottom: 12px;
+}
+
+.identity-card textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.identity-save {
+  font-size: 0.8rem;
+}
+
+.admin-private-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.admin-private-links a {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-muted);
+  transition: all 0.15s ease;
+}
+
+.admin-private-links a:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+@media (max-width: 600px) {
+  .week-strip {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
